@@ -34,9 +34,7 @@ public class AuthController {
             @RequestBody LoginRequest loginRequest,
             HttpServletResponse response
     ) {
-        System.out.println("Hemlo1");
         LoginRequest user = authService.login(loginRequest);
-        System.out.println("Hemlo5");
         if (null != user) {
             String token = jwtUtils.generateToken(user.getUsername());
             Cookie cookie = new Cookie("jwt", token);
@@ -44,7 +42,6 @@ public class AuthController {
             cookie.setPath("/");
             cookie.setMaxAge(24*60*60*60);
             response.addCookie(cookie);
-
             return ResponseEntity.status(200).body("Logged In!");
         }
         return ResponseEntity.status(404).body("User Not Found!");

@@ -29,7 +29,6 @@ public class AuthenticatedUserController {
     public ResponseEntity<?> dashboard(HttpServletRequest request) {
         String token = null;
         for (Cookie cookie: request.getCookies()) {
-            System.out.println(cookie);
             if ("jwt".equals(cookie.getName())) {
                 token = cookie.getValue();
             }

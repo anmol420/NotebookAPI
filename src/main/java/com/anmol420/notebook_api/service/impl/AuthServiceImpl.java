@@ -43,17 +43,14 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public LoginRequest login(LoginRequest request) {
-        System.out.println("Hemlo2");
         Optional<User> userFound = userRepository.findByUsername(request.getUsername());
         if (userFound.isPresent()) {
-            System.out.println("Hemlo3");
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             request.getUsername(),
                             request.getPassword()
                     )
             );
-            System.out.println("Hemlo4");
             return LoginRequest.builder()
                     .username(request.getUsername())
                     .build();
