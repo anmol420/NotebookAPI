@@ -1,5 +1,6 @@
 package com.anmol420.notebook_api.service.impl;
 
+import com.anmol420.notebook_api.domain.dtos.LoginRequest;
 import com.anmol420.notebook_api.domain.dtos.RegisterRequest;
 import com.anmol420.notebook_api.domain.entities.User;
 import com.anmol420.notebook_api.repository.UserRepository;
@@ -7,6 +8,7 @@ import com.anmol420.notebook_api.service.AuthService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +39,26 @@ public class AuthServiceImpl implements AuthService {
                     .build();
             userRepository.save(user);
         }
+    }
+
+    @Override
+    public LoginRequest login(LoginRequest request) {
+        System.out.println("Hemlo2");
+        Optional<User> userFound = userRepository.findByUsername(request.getUsername());
+        if (userFound.isPresent()) {
+            System.out.println("Hemlo3");
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getUsername(),
+                            request.getPassword()
+                    )
+            );
+            System.out.println("Hemlo4");
+            return LoginRequest.builder()
+                    .username(request.getUsername())
+                    .build();
+        }
+        return null;
     }
 
 }
