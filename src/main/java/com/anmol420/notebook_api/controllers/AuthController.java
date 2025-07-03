@@ -1,8 +1,8 @@
 package com.anmol420.notebook_api.controllers;
 
 import com.anmol420.notebook_api.config.JwtUtils;
-import com.anmol420.notebook_api.domain.dtos.LoginRequest;
-import com.anmol420.notebook_api.domain.dtos.RegisterRequest;
+import com.anmol420.notebook_api.domain.dtos.user.LoginRequest;
+import com.anmol420.notebook_api.domain.dtos.user.RegisterRequest;
 import com.anmol420.notebook_api.service.AuthService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;

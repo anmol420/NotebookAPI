@@ -1,6 +1,6 @@
 package com.anmol420.notebook_api.controllers;
 
-import com.anmol420.notebook_api.config.JwtUtils;
+import com.anmol420.notebook_api.utils.ExtractAuthenticatedUUID;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -8,12 +8,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(path = "/api/authenticated")
 @RequiredArgsConstructor
 public class AuthenticatedUserController {
 
-    private final JwtUtils jwtUtils;
+    private final ExtractAuthenticatedUUID extractAuthenticatedUUID;
 
     @PostMapping(path = "/logout")
     public ResponseEntity<?> logout(HttpServletResponse response) {
@@ -27,23 +29,11 @@ public class AuthenticatedUserController {
 
     @GetMapping("/dashboard")
     public ResponseEntity<?> dashboard(HttpServletRequest request) {
-        String token = null;
-        for (Cookie cookie: request.getCookies()) {
-            if ("jwt".equals(cookie.getName())) {
-                token = cookie.getValue();
-            }
+        UUID id = extractAuthenticatedUUID.extractUUID(request);
+        if (null == id) {
+            return ResponseEntity.status(500).body("Error!");
         }
-
-        if (null == token) {
-            return ResponseEntity.status(401).body("Unauthenticated!");
-        }
-
-        String username = jwtUtils.extractUsername(token);
-        if (null == username) {
-            return ResponseEntity.status(401).body("Invalid or Expired Token");
-        }
-
-        return ResponseEntity.ok("Hello " + username);
+        return ResponseEntity.ok("Hello " + id);
     }
 
 }

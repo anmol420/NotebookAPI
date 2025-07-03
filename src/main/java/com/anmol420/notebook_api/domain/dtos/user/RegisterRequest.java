@@ -1,4 +1,4 @@
-package com.anmol420.notebook_api.domain.dtos;
+package com.anmol420.notebook_api.domain.dtos.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

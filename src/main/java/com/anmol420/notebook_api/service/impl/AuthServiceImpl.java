@@ -1,7 +1,7 @@
 package com.anmol420.notebook_api.service.impl;
 
-import com.anmol420.notebook_api.domain.dtos.LoginRequest;
-import com.anmol420.notebook_api.domain.dtos.RegisterRequest;
+import com.anmol420.notebook_api.domain.dtos.user.LoginRequest;
+import com.anmol420.notebook_api.domain.dtos.user.RegisterRequest;
 import com.anmol420.notebook_api.domain.entities.User;
 import com.anmol420.notebook_api.repository.UserRepository;
 import com.anmol420.notebook_api.service.AuthService;
